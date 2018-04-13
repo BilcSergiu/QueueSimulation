@@ -16,8 +16,8 @@ public class ClientGenerator {
 	}
 
 	public Customer generateClient() {
-		int arrivalTime = this.minimumArrivalTime + (int) (Math.random() * this.maximumArrivalTime);
-		int serviceTime = this.minimumServiceTime + (int) (Math.random() * this.maximumServiceTime);
+		int arrivalTime = this.minimumArrivalTime + (int) (Math.random() * (this.maximumArrivalTime - this.minimumArrivalTime));
+		int serviceTime = this.minimumServiceTime + (int) (Math.random() * ( this.maximumServiceTime - this.minimumServiceTime));
 		clientNumber++;
 		return new Customer(clientNumber, arrivalTime, serviceTime);
 

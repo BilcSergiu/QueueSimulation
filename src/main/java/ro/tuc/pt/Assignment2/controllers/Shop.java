@@ -21,7 +21,9 @@ public class Shop {
 	private View view = new View();
 	private ClientGenerator clientGenerator;
 	private Timer timer;
+	private Timer timer1;
 	private TimerTask timerTask;
+	private TimerTask timerTask1;
 	private Queue<Customer> customersToEnterQueues;
 	private List<Server> servers;
 	private List<Thread> threads;
@@ -44,7 +46,8 @@ public class Shop {
 		threads = new ArrayList<Thread>();
 		toRemove = new ArrayList<Customer>();
 		timer = new Timer();
-
+		timer1 = new Timer();
+		
 		view.actionStart(l -> {
 			try {
 				this.runningTime = Integer.parseInt(view.getTxtTimpRulare().getText());
@@ -71,6 +74,7 @@ public class Shop {
 			}
 
 			defineTaskTimer();
+			defineTaskTimer1();
 			generateClients();
 
 			for (Customer customer : this.customersToEnterQueues) {
@@ -90,6 +94,7 @@ public class Shop {
 
 	public void startTimer() {
 		timer.scheduleAtFixedRate(timerTask, 0, 1000);
+		timer1.scheduleAtFixedRate(timerTask1, 0, 1000);
 	}
 
 	public int getRunningTime() {
@@ -144,6 +149,18 @@ public class Shop {
 
 	public void printLog(String string) {
 		this.view.getTextAreaLog().append(string);
+	}
+
+	public void defineTaskTimer1() {
+		timerTask1 = new TimerTask() {
+			@SuppressWarnings("deprecation")
+			public void run() {
+				if (getRealTime() <= runningTime) {
+					view.refreshTime(Long.toString(getRealTime()));
+				}
+			}
+		};
+		
 	}
 
 	public void defineTaskTimer() {
